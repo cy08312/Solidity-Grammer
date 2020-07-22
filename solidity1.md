@@ -50,10 +50,71 @@ balances["charles"] = 1;
 balances["ada"];
 //把元素设置为类型的初始值，整型会重置为0
 delete balances;
+```  
+## 结构体
+```javascript
+struct Bank{
+    address owner;
+    uint balance;
+}
+//初始化
+Bank c = Bank(msg.sender, 5);
+//重新赋值
+c.balance=15;
+```
+## 函数
+### 函数定义
+```
+function 函数名(参数列表) returns (返回类型){
+    ......
+    return (返回值)
+}
+```
+函数可以有多个返回值，当指明返回参数变量名字时，可以不需要显式返回  
+```
+function increment (uint x, uint y) returns (unit a, uint b){
+    a = x + 1;
+    b = y + 1;
+}
+```
+### 函数的可见性
+<kbd>public</kbd>：可以在合约内调用，通过交易调用，还可以被其他合约调用  
+<kbd>private</kbd>：只能从定义它们的合约的内部访问  
+<kbd>external</kbd>：可以被其他合约调用，也可以通过交易来调用  
+<kbd>internal</kbd>：只能够从内部访问(当前合约内部或子合约内部)  
+### 回退函数
+每个合约中都有且仅有一个没有名字的函数，这个函数既无参数也无返回值  
+一个没有定义回退函数的合约，如果接收ether，会触发异常，并返还ether，所以合约要接收ether，必须实现回退函数  
+```
+function () {
+    ......
+}
 ```
 # 单位
 ## 时间单位
 <kbd>seconds</kbd>、<kbd>minutes</kbd>、<kbd>days</kbd>、<kbd>weeks</kbd>、<kbd>years</kbd>均可作为后缀，默认以<kbd>seconds</kbd>为单位  
 ## 货币单位
-可用后缀有<kbd>wei</kbd>、<kbd>finney</kbd>、<kbd>szabo</kbd>、<kbd>ether</kbd>，默认是<kbd>wei</kbd>
+可用后缀有<kbd>wei</kbd>、<kbd>finney</kbd>、<kbd>szabo</kbd>、<kbd>ether</kbd>，默认是<kbd>wei</kbd>  
+# 全局变量
+全局变量可以在合约脚本中任何地方使用，常用的有<kbd>this</kbd>、<kbd>msg</kbd>、<kbd>tx</kbd>、<kbd>block</kbd>
+## this
+<kbd>this</kbd>在合约中表示地址的引用  
+<kbd>this.balance</kbd>：查询合约的余额
+## msg
+<kbd>msg</kbd>表示发送给合约的消息  
+<kbd>msg.sender</kbd>：发送者的地址  
+<kbd>msg.value</kbd>：发送给合约的以太币数量  
+<kbd>msg.gas</kbd>：剩余gas  
+## tx
+<kbd>tx.origin</kbd>：交易发送者的地址  
+<kbd>tx.gasprice</kbd>：交易的gas价格 
+## block  
+<kbd>block.number</kbd>：当前区块号  
+<kbd>block.difficulty</kbd>：当前区块的难度  
+<kbd>block.limit</kbd>：当前区块的gaslimit  
+<kbd>block.coinbase</kbd>：当前区块矿工的地址  
+<kbd>block.timestamp</kbd>：当前区块的时间戳  
+# 继承
+solidity合约中的继承通过<kbd>is</kbd>关键字实现，支持多重继承
+
 
